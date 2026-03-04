@@ -35,6 +35,10 @@ print(fit1.summary())
 
 # (c) Fit a model fit2 for chol with leeftijd, bmi, sekse and alcohol. Which factors are statistically significant?
 
+# Statistically significant factors are those with a p-value less than 0.05 -> P>|t| 
+# => All variables are statistically significant 
+
+
 # With statsmodels.formula.api
 # print("With statsmodels.formula.api")
 # model3 = sfm.ols("chol ~ C(sekse, Treatment('man')) + leeftijd + bmi + C(alcohol, Treatment('niet drinkers'))", data=chol1).fit()
@@ -68,14 +72,10 @@ X = sm.add_constant(X)
 model2 = sm.OLS(Y,X)
 fit2 = model2.fit() # fitobject
 print(fit2.summary())
+print(fit2.pvalues)
 
 # (d) Add the residuals from the model fit2 to the table chol1 and make a histogram from the residuals.
 chol1['residuals'] = fit2.resid
 sns.histplot(chol1['residuals'], bins=10, kde=True)
 plt.hist(chol1['residuals'], bins=10)
 plt.show()
-
-
-### Assignment B ###
-#  Import the dataset births.csv and call this table births
-births = pd.read_csv("births.csv")
